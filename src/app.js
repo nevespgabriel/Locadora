@@ -10,6 +10,4 @@ app.use(e.json());
 app.use("/movie", movie_router);
 app.use("/", user_router);
 
-app.listen(process.env.API_PORT, () => {
-    console.log(`Server running at ${process.env.API_PORT}  port.`);
-})
+app.listen(process.env.API_PORT, () => console.log(`Server running at ${process.env.API_PORT}  port.`));

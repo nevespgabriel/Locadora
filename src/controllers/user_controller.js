@@ -2,8 +2,13 @@ import User from "../models/user_model.js";
 
 const signup = async (req, res) => {
     try{
-        const user = await User.create(req.body);
-        res.status(201).json(user);
+        const user = await User.create({
+            email: req.body.email,
+            password: req.body.password,
+            nickname: req.body.nickname,
+        });
+        const token = jwtService.generateAccessToken(user);
+        res.status(201).json(token);
     } catch(error){
         res.status(400).send(error.message);
     }
@@ -20,7 +25,8 @@ const login = async (req, res) => {
                 error: "Email or password incorrect"
             })
         } else{
-            res.json(user);
+            const token = jwtService.generateAccessToken(user);
+            res.json(token);
         }
     } catch(error){
         res.status(400).send(error.message)
